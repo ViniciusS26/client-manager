@@ -1,0 +1,1 @@
+# TESTE TÉCNICO: Desenvolvedor Backend (Client Management & Pipefy Integration)
