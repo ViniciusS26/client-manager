@@ -1,0 +1,34 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: meu_usuario
+      POSTGRES_PASSWORD: minha_senha_secreta
+      POSTGRES_DB: meu_banco_graphql
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+
+  web:
+    build: .
+    container_name: fastapi_app
+    
+    command: uvicorn schemas:app --host 0.0.0.0 --port 8000 --reload
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    environment:
+      - DATABASE_URL=postgresql://root:vini123@db:5432/cliente_db
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
