@@ -1,17 +1,31 @@
+
 import strawberry
 from typing import List
-from graphql.types import UserType
+from strawberry.types import Info
+from sqlalchemy import select
+from src.graphql.schema import Cliente
+from src.graphql.types import UserType
 
 #querys para consultar os dados do banco de dados, utilizando o UserType para estruturar a resposta
+from src.models.models import Cliente 
+from src.connection.connection import AsyncSessionLocal
+from src.graphql.types import UserType
 
 
 @strawberry.type
-class UserQuery:
+class Query:
 
     @strawberry.field
-    def users(self) -> List[UserType]:
-        
-        return [
-            UserType(id=1, name="Alice", email="alice@example.com", is_active=True),
-            UserType(id=2, name="Bob", email="bob@example.com", is_active=False)
-        ]
+    async def get_clientes(self, info: Info) -> List[UserType]:
+        """Consulta todos os clientes cadastrados no banco de dados e retorna uma lista de UserType"""
+        async with AsyncSessionLocal() as session:
+            result = await session.execute(select(Cliente))
+            clientes = result.scalars().all()
+            return [UserType(
+                id=cliente.id,
+                cliente_name=cliente.cliente_name,
+                cliente_email=cliente.cliente_email,
+                tipo_solicitacao=cliente.tipo_solicitacao,
+                valor_patrimonio=cliente.valor_patrimonio,
+                status=cliente.status
+            ) for cliente in clientes]
