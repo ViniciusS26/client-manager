@@ -1,33 +1,38 @@
-version: '3.9'
+version: '3.10'
 
 services:
-  db:
+  postgres:
     image: postgres:15-alpine
     container_name: postgres_db
     restart: always
     environment:
-      POSTGRES_USER: meu_usuario
-      POSTGRES_PASSWORD: minha_senha_secreta
-      POSTGRES_DB: meu_banco_graphql
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
 
-  web:
+  api:
     build: .
     container_name: fastapi_app
     
-    command: uvicorn schemas:app --host 0.0.0.0 --port 8000 --reload
+    command: uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload
     ports:
       - "8000:8000"
     volumes:
       - .:/app
     environment:
-      - DATABASE_URL=postgresql://root:vini123@db:5432/cliente_db
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
     depends_on:
-      db:
+      postgres:
         condition: service_healthy
 
 volumes:

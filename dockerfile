@@ -1,5 +1,5 @@
 # Usa uma imagem oficial do Python otimizada
-FROM python:3.11-slim
+FROM python:3.10-slim
 
 # Define o diretório de trabalho dentro do container
 WORKDIR /app
@@ -16,10 +16,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Copia os arquivos de dependências primeiro (otimiza o cache do Docker)
-COPY requirements.txt .
+COPY Requirements.txt .
 
 # Instala as dependências do Python
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r Requirements.txt
 
 # Copia o restante do código do projeto para o container
 COPY . .
@@ -29,4 +29,4 @@ EXPOSE 8000
 
 # O comando padrão será sobrescrito pelo docker-compose em desenvolvimento,
 # mas serve como um excelente fallback para produção
-CMD ["uvicorn", "schemas:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
