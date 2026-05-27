@@ -16,8 +16,6 @@ async def lifespan(app: FastAPI):
     yield
    
 
-# Passamos o lifespan para o FastAPI
-
 
 
 schema = strawberry.Schema(query=Query, mutation=Mutation)
