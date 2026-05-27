@@ -4,8 +4,10 @@ import strawberry
 @strawberry.type
 class UserType:
     id: int
-    name: str
-    email: str
-    is_active: bool
+    cliente_name: str
+    cliente_email: str
+    tipo_solicitacao: str
+    valor_patrimonio: float
+    status: str 
 
 
