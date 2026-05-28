@@ -4,8 +4,8 @@ from fastapi import FastAPI
 from strawberry.fastapi import GraphQLRouter
 
 from src.models.models import Base
-from src.graphql.mutations import Mutation
-from src.graphql.queries import Query
+from src.schema.mutations import Mutation
+from src.schema.queries import Query
 from src.connection.connection import async_engine
 
 @asynccontextmanager
