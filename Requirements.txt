@@ -1,6 +1,6 @@
 fastapi>=0.110.0
 uvicorn[standard]>=0.28.0
-strawberry-graphql[server]>=0.220.0
+strawberry-graphql[server]>=0.230.0
 sqlalchemy>=2.0.0
 asyncpg>=0.29.0
 psycopg2-binary>=2.9.9
