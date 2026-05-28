@@ -17,4 +17,7 @@ class Cliente(Base):
     cliente_email: Mapped[str] = mapped_column(String, unique=True, index=True)
     tipo_solicitacao: Mapped[str] = mapped_column(String)
     valor_patrimonio: Mapped[float] = mapped_column(Float)
-    status: Mapped[str] = mapped_column(String, default="Atualização cadastral")
+    status: Mapped[str] = mapped_column(String, default="Aguardando análise")
+
+
+    

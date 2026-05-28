@@ -3,13 +3,13 @@ import strawberry
 from typing import List
 from strawberry.types import Info
 from sqlalchemy import select
-from src.graphql.schema import Cliente
-from src.graphql.types import UserType
+from src.schema.schema import Cliente
+from src.schema.types import UserType
 
 #querys para consultar os dados do banco de dados, utilizando o UserType para estruturar a resposta
 from src.models.models import Cliente 
 from src.connection.connection import AsyncSessionLocal
-from src.graphql.types import UserType
+from src.schema.types import UserType
 
 
 @strawberry.type
