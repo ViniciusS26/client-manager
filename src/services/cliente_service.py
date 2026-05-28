@@ -47,8 +47,7 @@ class ClienteValidator(BaseModel):
 FUNÇÕES SEPARADAS PARA VALIDAÇÃO
 """
 
-def valida_dados(cliente: Cliente) -> Cliente:
-
+def valida_dados(cliente: Cliente):
     """Função para validar os dados de entrada utilizando o ClienteValidator"""
     try:
         cliente_validado = ClienteValidator(
@@ -59,8 +58,7 @@ def valida_dados(cliente: Cliente) -> Cliente:
         )
         return cliente_validado
     except ValueError as e:
-        print(f"Erro de validação: {e}")
-        return None
+        raise ValueError(str(e))
 
 
 async def verifica_email(cliente_email: str) -> bool:
