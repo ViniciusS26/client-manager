@@ -45,5 +45,7 @@ class Mutation:
                 id=novo_cliente.id,
                 cliente_name=novo_cliente.cliente_name,
                 cliente_email=novo_cliente.cliente_email,
+                tipo_solicitacao=novo_cliente.tipo_solicitacao,
+                valor_patrimonio=novo_cliente.valor_patrimonio,
                 status=novo_cliente.status,
             )
