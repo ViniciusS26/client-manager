@@ -71,9 +71,7 @@ Este projeto simula o  esqueleto de um sistema interno para o Mundo Invest. A ap
 
    - Endpoint REST para webhook Pipefy (Windows PowerShell):
      ```powershell
-     curl.exe -X POST http://localhost:8000/webhooks/pipefy/card-updated `
-       -H "Content-Type: application/json" `
-       -d '{"event_id":"evt_001","card_id":"card_001","cliente_email":"teste@example.com","timestamp":"2026-05-29T12:00:00Z"}'
+        Invoke-RestMethod -Uri http://localhost:8000/webhooks/pipefy/card-updated ` -Method Post ` -ContentType "application/json" `-Body '{"event_id":"evt_001 "card_id":"card_001","cliente_email":"teste@example.com","timestamp":"2026-05-29T12:00:00Z"}'
      ```
 
    - Query GraphQL `get_clientes` (Linux/macOS):
