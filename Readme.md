@@ -76,6 +76,20 @@ Este projeto simula o  esqueleto de um sistema interno para o Mundo Invest. A ap
        -d '{"event_id":"evt_001","card_id":"card_001","cliente_email":"teste@example.com","timestamp":"2026-05-29T12:00:00Z"}'
      ```
 
+   - Query GraphQL `get_clientes` (Linux/macOS):
+     ```bash
+     curl -X POST http://localhost:8000/cliente \
+       -H "Content-Type: application/json" \
+       -d '{"query":"query { get_clientes { id clienteName clienteEmail tipoSolicitacao valorPatrimonio status prioridade } }"}'
+     ```
+
+   - Query GraphQL `get_clientes` (Windows PowerShell):
+     ```powershell
+     curl.exe -X POST http://localhost:8000/cliente `
+       -H "Content-Type: application/json" `
+       -d '{"query":"query { get_clientes { id clienteName clienteEmail tipoSolicitacao valorPatrimonio status prioridade } }"}'
+     ```
+
 ### 3 Tecnologias usadas
 
 - 🐍 Python 3.10
