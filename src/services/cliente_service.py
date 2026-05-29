@@ -29,7 +29,7 @@ class ClienteValidator(BaseModel):
     def validate_cliente_email(cls, value):
        
         try:
-            validate_email(value)
+            validate_email(value, check_deliverability=False)
         except EmailNotValidError as e:
             raise ValueError(f"Email inválido: {e}")
 
