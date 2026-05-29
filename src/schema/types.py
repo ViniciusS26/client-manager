@@ -8,6 +8,14 @@ class UserType:
     cliente_email: str
     tipo_solicitacao: str
     valor_patrimonio: float
+    status: str
+    prioridade: str
+
+
+@strawberry.type
+class WebhookResultType:
+    sucesso: bool
+    mensagem: str
+    cliente_id: int 
+    prioridade: str 
     status: str 
-
-

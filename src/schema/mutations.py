@@ -1,33 +1,39 @@
 
 import strawberry
 from strawberry.types import Info
-from sqlalchemy.future import select
 
 from src.connection.connection import AsyncSessionLocal
 from src.models.models import Cliente
-from src.schema.types import UserType
+from src.schema.types import UserType, WebhookResultType
 from src.services.cliente_service import valida_dados, verifica_email
+from src.services.webhook_service import processar_webhook
 
 
 @strawberry.input
 class ClienteInput:
-    """
-        Criando os campos que podem ser alterados na api
-    """
+    """Criando os campos que podem ser alterados na api"""
     cliente_name: str
     cliente_email: str
     tipo_solicitacao: str
     valor_patrimonio: float
 
+
+@strawberry.input
+class WebhookInput:
+    """Input para processar webhook do Pipefy"""
+    event_id: str
+    card_id: str
+    cliente_email: str
+    timestamp: str
+
+
 @strawberry.type
 class Mutation:
-    """
-        Mutation para criar um novo cliente no banco de dados, utilizando o ClienteType para estruturar a resposta
-    """
+    """Mutations para criar clientes e processar webhooks"""
 
     @strawberry.mutation
     async def create_cliente(self, info: Info, input: ClienteInput) -> UserType:
-        """Cria um novo cliente no banco de dados e retorna os dados do cliente criado"""
+        """Cria um novo cliente no banco de dados"""
 
         novo_cliente = Cliente(
             cliente_name=input.cliente_name,
@@ -54,4 +60,23 @@ class Mutation:
                 tipo_solicitacao=novo_cliente.tipo_solicitacao,
                 valor_patrimonio=novo_cliente.valor_patrimonio,
                 status=novo_cliente.status,
+                prioridade=novo_cliente.prioridade,
             )
+
+    @strawberry.mutation
+    async def processar_webhook_pipefy(self, info: Info, input: WebhookInput) -> WebhookResultType:
+        """Processa webhook do Pipefy quando um card é atualizado"""
+        resultado = await processar_webhook(
+            event_id=input.event_id,
+            card_id=input.card_id,
+            cliente_email=input.cliente_email,
+            timestamp=input.timestamp
+        )
+
+        return WebhookResultType(
+            sucesso=resultado["sucesso"],
+            mensagem=resultado["mensagem"],
+            cliente_id=resultado.get("cliente_id"),
+            prioridade=resultado.get("prioridade"),
+            status=resultado.get("status")
+        )
