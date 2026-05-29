@@ -12,10 +12,12 @@ class UserType:
     prioridade: str
 
 
+from typing import Optional
+
 @strawberry.type
 class WebhookResultType:
     sucesso: bool
     mensagem: str
-    cliente_id: int 
-    prioridade: str 
-    status: str 
+    cliente_id: Optional[int] = None
+    prioridade: Optional[str] = None
+    status: Optional[str] = None

@@ -27,5 +27,6 @@ class Query:
                 cliente_email=cliente.cliente_email,
                 tipo_solicitacao=cliente.tipo_solicitacao,
                 valor_patrimonio=cliente.valor_patrimonio,
-                status=cliente.status
+                status=cliente.status,
+                prioridade=cliente.prioridade
             ) for cliente in clientes]
