@@ -23,7 +23,7 @@ async def test_query_get_clientes_retorna_lista_vazia(client):
 
     dados = response.json()
     assert "errors" not in dados
-    assert dados["data"]["get_clientes"] == []
+    assert dados["data"]["getClientes"] == []
 
 
 @pytest.mark.asyncio
@@ -70,7 +70,7 @@ async def test_query_get_clientes_retorna_clientes_cadastrados(client):
 
     dados = response.json()
     assert "errors" not in dados
-    clientes = dados["data"]["get_clientes"]
+    clientes = dados["data"]["getClientes"]
     assert len(clientes) == 1
     assert clientes[0]["clienteName"] == "Cliente Query Test"
     assert clientes[0]["clienteEmail"] == "query@teste.com"
